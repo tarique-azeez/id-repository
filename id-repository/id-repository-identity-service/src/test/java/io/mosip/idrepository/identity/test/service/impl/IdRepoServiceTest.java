@@ -1,6 +1,11 @@
 package io.mosip.idrepository.identity.test.service.impl;
 
+import static io.mosip.idrepository.core.constant.IdRepoConstants.SPLITTER;
 import static io.mosip.idrepository.core.constant.IdRepoErrorConstants.INVALID_INPUT_PARAMETER;
+import static io.mosip.kernel.core.util.DateUtils.formatToISOString;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static io.mosip.kernel.core.util.DateUtils.formatToISOString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -24,6 +29,7 @@ import java.util.Optional;
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 
+import io.mosip.idrepository.core.dto.*;
 import io.mosip.idrepository.identity.helper.IdRepoServiceHelper;
 import org.apache.commons.io.IOUtils;
 import org.hibernate.exception.JDBCConnectionException;

@@ -64,7 +64,6 @@ public enum AuditEvents {
 	ID_VID_METADATA("IDR-029", "System Event");
 
 
-
 	/** The event id. */
 	private final String eventId;
 

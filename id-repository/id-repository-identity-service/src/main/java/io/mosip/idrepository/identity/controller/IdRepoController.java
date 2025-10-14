@@ -20,6 +20,7 @@ import jakarta.annotation.Resource;
 
 import io.mosip.idrepository.core.constant.IdRepoErrorConstants;
 import io.mosip.idrepository.core.dto.*;
+import io.mosip.kernel.core.idvalidator.exception.InvalidIDException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -71,7 +72,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import springfox.documentation.annotations.ApiIgnore;
-import org.apache.commons.lang.StringUtils;
 
 /**
  * The Class IdRepoController - Controller class for Identity service. These
@@ -583,6 +583,7 @@ public class IdRepoController {
 		responseWrapper.setResponse(attributeListDto);
 		return new ResponseEntity<>(responseWrapper, HttpStatus.OK);
 	}
+
 
 	/**
 	 * This Method returns Uin from the Identity Object.
