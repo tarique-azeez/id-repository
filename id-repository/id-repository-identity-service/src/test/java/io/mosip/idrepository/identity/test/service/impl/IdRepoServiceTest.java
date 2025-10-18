@@ -1,6 +1,5 @@
 package io.mosip.idrepository.identity.test.service.impl;
 
-import static io.mosip.idrepository.core.constant.IdRepoConstants.SPLITTER;
 import static io.mosip.idrepository.core.constant.IdRepoErrorConstants.INVALID_INPUT_PARAMETER;
 import static io.mosip.kernel.core.util.DateUtils.formatToISOString;
 import static org.junit.Assert.assertEquals;
@@ -29,7 +28,6 @@ import java.util.Optional;
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 
-import io.mosip.idrepository.core.dto.*;
 import io.mosip.idrepository.identity.helper.IdRepoServiceHelper;
 import org.apache.commons.io.IOUtils;
 import org.hibernate.exception.JDBCConnectionException;
@@ -2624,10 +2622,11 @@ public class IdRepoServiceTest {
 		String hashSalt = "dummySalt";
 		Uin uinObj = getMockUin();
 
-		Mockito.when(securityManager.getSaltKeyForId(Mockito.anyString())).thenReturn(saltId);
-		Mockito.when(uinHashSaltRepo.retrieveSaltById(saltId)).thenReturn(hashSalt);
-		Mockito.when(securityManager.hashwithSalt(uin.getBytes(), hashSalt.getBytes())).thenReturn("hashedUIN");
-		Mockito.when(uinRepo.findByUinHash(hashedUin)).thenReturn(Optional.of(uinObj));
+		IdRepoSecurityManager idRepoSecurityManager = Mockito.mock(IdRepoSecurityManager.class);
+		Mockito.when(idRepoSecurityManager.getSaltKeyForId(uin)).thenReturn(saltId);
+		Mockito.when(uinHashSaltRepo.retrieveSaltById(anyInt())).thenReturn(hashSalt);
+		Mockito.when(idRepoSecurityManager.hashwithSalt(any(), any())).thenReturn("hashedUIN");
+		Mockito.when(uinRepo.findByUinHash(anyString())).thenReturn(Optional.of(uinObj));
 		IdVidMetadataResponseDTO result = proxyService.getIdVidMetadata(uin, IdType.UIN);
 
 		assertEquals(uinObj.getRegId(), result.getRid());
@@ -2670,9 +2669,10 @@ public class IdRepoServiceTest {
 		int saltId = 123;
 		String hashSalt = "dummySalt";
 
-		Mockito.when(securityManager.getSaltKeyForId(Mockito.anyString())).thenReturn(saltId);
-		Mockito.when(uinHashSaltRepo.retrieveSaltById(saltId)).thenReturn(hashSalt);
-		Mockito.when(securityManager.hashwithSalt(uin.getBytes(), hashSalt.getBytes())).thenReturn("hashedUIN");
+		IdRepoSecurityManager idRepoSecurityManager = Mockito.mock(IdRepoSecurityManager.class);
+		Mockito.when(idRepoSecurityManager.getSaltKeyForId(uin)).thenReturn(saltId);
+		Mockito.when(uinHashSaltRepo.retrieveSaltById(anyInt())).thenReturn(hashSalt);
+		Mockito.when(idRepoSecurityManager.hashwithSalt(any(), any())).thenReturn("hashedUIN");
 		Mockito.when(uinRepo.findByUinHash(Mockito.anyString())).thenThrow(new DataAccessException("DB Error") {});
 		proxyService.getIdVidMetadata(uin, IdType.UIN);
 	}
