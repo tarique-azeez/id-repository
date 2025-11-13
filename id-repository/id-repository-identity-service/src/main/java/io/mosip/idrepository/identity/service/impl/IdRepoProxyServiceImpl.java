@@ -20,6 +20,7 @@ import io.mosip.idrepository.core.constant.*;
 import io.mosip.idrepository.core.dto.*;
 import io.mosip.idrepository.core.entity.Handle;
 import io.mosip.idrepository.identity.helper.IdRepoServiceHelper;
+import io.mosip.idrepository.core.dto.IdVidMetadataResponseDTO;
 import io.mosip.idrepository.core.repository.HandleRepo;
 import io.mosip.kernel.core.util.DateUtils;
 import io.mosip.kernel.core.websub.model.Event;
@@ -41,19 +42,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import io.mosip.idrepository.core.builder.RestRequestBuilder;
-import io.mosip.idrepository.core.constant.EventType;
-import io.mosip.idrepository.core.constant.IDAEventType;
-import io.mosip.idrepository.core.constant.IdRepoErrorConstants;
-import io.mosip.idrepository.core.constant.IdType;
-import io.mosip.idrepository.core.constant.RestServicesConstants;
-import io.mosip.idrepository.core.dto.DocumentsDTO;
-import io.mosip.idrepository.core.dto.HandleInfoDTO;
-import io.mosip.idrepository.core.dto.IdRequestDTO;
-import io.mosip.idrepository.core.dto.IdResponseDTO;
-import io.mosip.idrepository.core.dto.ResponseDTO;
-import io.mosip.idrepository.core.dto.RestRequestDTO;
-import io.mosip.idrepository.core.dto.IdVidMetadataResponseDTO;
-import io.mosip.idrepository.core.entity.Handle;
 import io.mosip.idrepository.core.exception.IdRepoAppException;
 import io.mosip.idrepository.core.exception.IdRepoAppUncheckedException;
 import io.mosip.idrepository.core.exception.IdRepoDataValidationException;
@@ -557,7 +545,6 @@ public class IdRepoProxyServiceImpl implements IdRepoService<IdRequestDTO, IdRes
 			throw new IdRepoAppException(NO_RECORD_FOUND);
 		}
 	}
-
 	/**
 	 * Retrieves the id vid metadata information for a given individual
 	 * based on the provided ID and its type.
@@ -802,16 +789,16 @@ public class IdRepoProxyServiceImpl implements IdRepoService<IdRequestDTO, IdRes
 		}
 	}
 
-	private IdVidMetadataResponseDTO getIdVidMetadataResponseDTO(Uin uin) {
-		IdVidMetadataResponseDTO metadataResponseDTO = new IdVidMetadataResponseDTO();
-		metadataResponseDTO.setRid(uin.getRegId());
-		if (uin.getUpdatedDateTime() != null) {
-			metadataResponseDTO.setUpdatedOn(DateUtils.formatToISOString(uin.getUpdatedDateTime()));
-		}
-		if (uin.getCreatedDateTime() != null) {
-			metadataResponseDTO.setCreatedOn(DateUtils.formatToISOString(uin.getCreatedDateTime()));
-		}
-		return metadataResponseDTO;
-	}
+    private IdVidMetadataResponseDTO getIdVidMetadataResponseDTO(Uin uin) {
+        IdVidMetadataResponseDTO metadataResponseDTO = new IdVidMetadataResponseDTO();
+        metadataResponseDTO.setRid(uin.getRegId());
+        if (uin.getUpdatedDateTime() != null) {
+            metadataResponseDTO.setUpdatedOn(DateUtils.formatToISOString(uin.getUpdatedDateTime()));
+        }
+        if (uin.getCreatedDateTime() != null) {
+            metadataResponseDTO.setCreatedOn(DateUtils.formatToISOString(uin.getCreatedDateTime()));
+        }
+        return metadataResponseDTO;
+    }
 
 }
